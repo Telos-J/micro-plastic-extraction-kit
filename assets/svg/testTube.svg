@@ -1,0 +1,22 @@
+<svg width="86" height="400" viewBox="0 20 86 400" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+    <clipPath id="tubeClip">
+    <path id="tube" d="M43 420C66.7482 420 86 400.748 86 377V20L0 20V377C0 400.748 19.2518 420 43 420Z"/>
+    </clipPath>
+    <path id="liquid" d="M400 420V840H0V420C50 420 50 437.143 100 437.143C150 437.143 150 420 200 420C250 420 250 437.143 300 437.143C350 437.143 350 420 400 420Z"/>
+</defs>
+<use xlink:href="#liquid" clip-path="url(#tubeClip)"/>
+<use xlink:href="#tube" opacity="0.61" fill="#C8D9D3"/>
+<path id="tubeShine" opacity="0.21" d="M14 70V313" stroke="white" stroke-width="8" stroke-miterlimit="10" stroke-linecap="round" stroke-dasharray="153 30"/>
+<g id="measurements">
+<path d="M1 66H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 104H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 143H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 181H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 220H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 258H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 296H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 335H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+<path d="M1 373H13" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round"/>
+</g>
+</svg>
