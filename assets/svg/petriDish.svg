@@ -1,4 +1,6 @@
 <svg width="237" height="237" viewBox="0 0 237 237" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="118.5" cy="118.5" r="118.5" fill="#C8D9D3"/>
-<circle cx="118.5" cy="118.5" r="103" stroke="#FCEFD6" stroke-width="3"/>
+<circle id="outer" cx="118.5" cy="118.5" r="118.5" fill="#C8D9D3"/>
+<circle id="inner" cx="118.5" cy="118.5" r="103" stroke="#FCEFD6" stroke-width="3"/>
+<circle id="liquid" cx="118.5" cy="118.5" r="96.5" fill="#21A890"/>
+<path id="shine" opacity="0.21" d="M196.5 119C196.5 151.166 176.904 178.754 149 190.48" stroke="white" stroke-width="12" stroke-linecap="round"/>
 </svg>
