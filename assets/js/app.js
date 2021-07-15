@@ -51,10 +51,18 @@ class Liquid {
     constructor(min, max) {
         this.numMicroPlastic = Math.floor((max - min) * Math.random() + min);
         this.visibileMicroPlastic = 0;
+        this.create()
     }
 
     addReagent(reagent) {
         this.visibileMicroPlastic = Math.floor(this.numMicroPlastic * reagent.detection);
+    }
+
+    create() {
+        const object = document.createElement('object');
+        object.setAttribute("data", "assets/svg/petriDish.svg");
+        object.setAttribute("type", "image/svg+xml");
+        document.querySelector("#petri-dishes").appendChild(object);
     }
 }
 
