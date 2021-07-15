@@ -16,7 +16,7 @@ class Reagent {
             this.liquid = this.svg.querySelector('#liquid');
             this.setColor(color);
             this.animate();
-            this.setY(200);
+            this.setY(300);
         })
     }
 
