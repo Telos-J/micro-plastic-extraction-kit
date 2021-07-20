@@ -17,6 +17,7 @@ class Reagent {
             this.setColor(color);
             this.animate();
             this.setY(300);
+            this.object = object
         })
     }
 
@@ -84,4 +85,8 @@ addEventListener('mousemove', e => {
     gsap.set(pipette, { x: e.clientX, y: e.clientY })
 })
 
-
+addEventListener('keypress', e => {
+    const box = wrightStein.object.getBoundingClientRect()
+    if(e.code == 'Space')
+    gsap.to(pipette, { x : (box.left + box.right) / 2, y : box.top, rotate : -45 })
+})
