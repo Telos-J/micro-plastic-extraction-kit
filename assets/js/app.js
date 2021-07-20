@@ -71,6 +71,8 @@ const tabWater = new Liquid(40, 50);
 const barleyTea = new Liquid(15, 25);
 const distilledWater = new Liquid(5, 8);
 
+const reagents = [thymolBlue, methylOrange, wrightStein, btb, ppt, phenolRed]
+
 const liquids = [tabWater, barleyTea, distilledWater];
 
 console.log(tabWater.numMicroPlastic, barleyTea.numMicroPlastic, distilledWater.numMicroPlastic)
@@ -86,13 +88,15 @@ addEventListener('mousemove', e => {
 })
 
 addEventListener('click', e => {
-    const rect1 = wrightStein.object.getBoundingClientRect()
-    const rect2 = pipette.getBoundingClientRect()
-    if (rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.y + rect1.height > rect2.y) {
-        gsap.to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
+    for (const reagent of reagents) {
+        const rect1 = reagent.object.getBoundingClientRect()
+        const rect2 = pipette.getBoundingClientRect()
+        if (rect1.x < rect2.x + rect2.width &&
+            rect1.x + rect1.width > rect2.x &&
+            rect1.y < rect2.y + rect2.height &&
+            rect1.y + rect1.height > rect2.y) {
+            gsap.to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
+            }
     }
 })
 
