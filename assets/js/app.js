@@ -85,23 +85,36 @@ for (let liquid of liquids) {
 console.log(tabWater.visibileMicroPlastic, barleyTea.visibileMicroPlastic, distilledWater.visibileMicroPlastic)
 
 addEventListener('mousemove', e => {
-    gsap.set(pipette, { x: e.clientX, y: e.clientY, rotate: 0 })
+    if (!pipette.active) gsap.set(pipette, { x: e.clientX, y: e.clientY, rotate: 0 })
 })
 
 addEventListener('click', e => {
+    if (pipette.full) return
+
     for (const reagent of reagents) {
         const rect1 = reagent.object.getBoundingClientRect()
         const rect2 = pipette.getBoundingClientRect()
         const liquid = pipette.contentDocument.querySelector('#liquid');
-        if (rect1.x < rect2.x + rect2.width / 2 &&
-            rect1.x + rect1.width > rect2.x &&
-            rect1.y < rect2.y + rect2.height &&
-            rect1.y + rect1.height > rect2.y + rect2.height / 2) {
+
+        if (AABB(rect1, rect2)) {
+            pipette.active = true
             gsap.timeline()
+                .set(liquid, { fill: reagent.color })
                 .to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
-                .to(liquid, { attr: { y: '-=100' } })
-                .set(liquid, { fill: reagent.color }, 0)
+                .to(liquid, {
+                    attr: { y: 113 }, onComplete: () => {
+                        pipette.active = false
+                        pipette.full = true
+                    }
+                })
         }
     }
 })
+
+function AABB(rect1, rect2) {
+    return rect1.x < rect2.x + rect2.width / 2 &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y + rect2.height / 2
+}
 
