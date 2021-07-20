@@ -80,12 +80,8 @@ for (let liquid of liquids) {
 
 console.log(tabWater.visibileMicroPlastic, barleyTea.visibileMicroPlastic, distilledWater.visibileMicroPlastic)
 
-
-
-
-
-
-
-
+addEventListener('mousemove', e => {
+    gsap.set(pipette, { x: e.clientX, y: e.clientY })
+})
 
 

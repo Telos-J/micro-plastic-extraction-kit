@@ -4,6 +4,12 @@
     padding: 0;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
 #container {
     display: flex;
     width: 100vw;
@@ -37,4 +43,12 @@
     top: 0;
     left: 0;
     width: 10rem;
+    transform: translate(-50%, -50%);
+}
+
+#cover {
+    position: absolute;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
 }
