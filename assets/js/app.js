@@ -82,11 +82,17 @@ for (let liquid of liquids) {
 console.log(tabWater.visibileMicroPlastic, barleyTea.visibileMicroPlastic, distilledWater.visibileMicroPlastic)
 
 addEventListener('mousemove', e => {
-    gsap.set(pipette, { x: e.clientX, y: e.clientY })
+    gsap.set(pipette, { x: e.clientX, y: e.clientY, rotate: 0 })
 })
 
-addEventListener('keypress', e => {
-    const box = wrightStein.object.getBoundingClientRect()
-    if(e.code == 'Space')
-    gsap.to(pipette, { x : (box.left + box.right) / 2, y : box.top, rotate : -45 })
+addEventListener('click', e => {
+    const rect1 = wrightStein.object.getBoundingClientRect()
+    const rect2 = pipette.getBoundingClientRect()
+    if (rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y) {
+        gsap.to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
+    }
 })
+
