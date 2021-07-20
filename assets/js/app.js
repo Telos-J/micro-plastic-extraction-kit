@@ -91,10 +91,10 @@ addEventListener('click', e => {
     for (const reagent of reagents) {
         const rect1 = reagent.object.getBoundingClientRect()
         const rect2 = pipette.getBoundingClientRect()
-        if (rect1.x < rect2.x + rect2.width &&
+        if (rect1.x < rect2.x + rect2.width /2 &&
             rect1.x + rect1.width > rect2.x &&
             rect1.y < rect2.y + rect2.height &&
-            rect1.y + rect1.height > rect2.y) {
+            rect1.y + rect1.height > rect2.y /2) {
             gsap.to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
             }
     }
