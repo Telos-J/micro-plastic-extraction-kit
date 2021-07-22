@@ -19,6 +19,7 @@ class Reagent {
             this.animate();
             this.setY(300);
             this.object = object
+            
         })
     }
 
@@ -49,7 +50,7 @@ const btb = new Reagent("Bromothymol Blue", "green", 0.9);
 const ppt = new Reagent("Phenolphthalein", "white", 0.2);
 const phenolRed = new Reagent("Phenol Red", "red", 0.3);
 
-class Liquid {
+class petryDish {
     constructor(min, max) {
         this.numMicroPlastic = Math.floor((max - min) * Math.random() + min);
         this.visibileMicroPlastic = 0;
@@ -65,21 +66,28 @@ class Liquid {
         object.setAttribute("data", "assets/svg/petriDish.svg");
         object.setAttribute("type", "image/svg+xml");
         document.querySelector("#petri-dishes").appendChild(object);
+        
+        object.addEventListener('load', () => {
+            this,object = object
+            this.svg = object.contentDocument.querySelector('svg');
+            this.liquid = this.svg.querySelector('#liquid');
+        
+        })
     }
 }
 
-const tabWater = new Liquid(40, 50);
-const barleyTea = new Liquid(15, 25);
-const distilledWater = new Liquid(5, 8);
+const tabWater = new petryDish(40, 50);
+const barleyTea = new petryDish(15, 25);
+const distilledWater = new petryDish(5, 8);
 
 const reagents = [thymolBlue, methylOrange, wrightStein, btb, ppt, phenolRed]
 
-const liquids = [tabWater, barleyTea, distilledWater];
+const petryDishes = [tabWater, barleyTea, distilledWater];
 
 console.log(tabWater.numMicroPlastic, barleyTea.numMicroPlastic, distilledWater.numMicroPlastic)
 
-for (let liquid of liquids) {
-    liquid.addReagent(btb)
+for (let petryDish of petryDishes) {
+    petryDish.addReagent(btb)
 }
 
 console.log(tabWater.visibileMicroPlastic, barleyTea.visibileMicroPlastic, distilledWater.visibileMicroPlastic)
@@ -89,9 +97,8 @@ addEventListener('mousemove', e => {
 })
 
 addEventListener('click', e => {
-    if (pipette.full) return
-
-    for (const reagent of reagents) {
+    if (!pipette.full)
+        for (const reagent of reagents) {
         const rect1 = reagent.object.getBoundingClientRect()
         const rect2 = pipette.getBoundingClientRect()
         const liquid = pipette.contentDocument.querySelector('#liquid');
@@ -108,6 +115,24 @@ addEventListener('click', e => {
                     }
                 })
         }
+    }
+    else
+    for (const petryDish of petryDishes) {
+        const rect1 = petryDish.object.getBoundingClientRect()
+        const rect2 = pipette.getBoundingClientRect()
+        const pipetteliquid = pipette.contentDocument.querySelector('#liquid');
+
+    if (AABB(rect1,rect2)) {
+        pipette.active = true 
+        gsap.timeline()
+                .to(pipette, 0.2, { x: (rect1.left + rect1.right + rect2.width) / 2, y:( rect1.top + rect1.bottom - rect2.height) / 2 })
+                .to(pipetteliquid, {
+                    attr: { y: 283 }, onComplete: () => {
+                        pipette.active = false
+                        pipette.full = false
+                    }
+                })
+    }
     }
 })
 
