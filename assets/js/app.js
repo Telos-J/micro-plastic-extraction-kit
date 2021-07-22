@@ -70,6 +70,7 @@ class PetryDish {
             this.object = object
             this.svg = object.contentDocument.querySelector('svg');
             this.liquid = this.svg.querySelector('#liquid');
+            gsap.set(this.svg.querySelector('#micro-plastic'), { x: '-=50' })
         })
     }
 }
@@ -131,7 +132,6 @@ addEventListener('click', e => {
                         }
                     }, 0.2)
                     .to(petryDish.liquid, { attr: { fill: pipetteLiquid.getAttribute('fill') } }, 0.2)
-                    .set(petryDish.svg.querySelector('#micro-plastic'), { x: '-=50' })
                     .to(petryDish.svg.querySelector('#micro-plastic'), { opacity: 1 })
             }
         }
