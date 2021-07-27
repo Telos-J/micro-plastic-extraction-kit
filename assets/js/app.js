@@ -59,6 +59,9 @@ class PetryDish {
 
     addReagent(reagent) {
         this.visibileMicroPlastic = Math.floor(this.numMicroPlastic * reagent.detection);
+        for (const microPlastic of this.microPlastics)
+        if (Math.random() < reagent.detection) gsap.to(microPlastic, { opacity : 1})
+        else gsap.to(microPlastic, { opacity : 0})
     }
 
     create() {
@@ -95,15 +98,7 @@ const barleyTea = new PetryDish(15, 25);
 const distilledWater = new PetryDish(5, 8);
 
 const reagents = [thymolBlue, methylOrange, wrightStein, btb, ppt, phenolRed]
-const petryDishes = [tabWater, barleyTea, distilledWater];
-
-console.log(tabWater.numMicroPlastic, barleyTea.numMicroPlastic, distilledWater.numMicroPlastic)
-
-for (let petryDish of petryDishes) {
-    petryDish.addReagent(btb)
-}
-
-console.log(tabWater.visibileMicroPlastic, barleyTea.visibileMicroPlastic, distilledWater.visibileMicroPlastic)
+const petryDishes = [tabWater, barleyTea, distilledWater] 
 
 addEventListener('mousemove', e => {
     if (!pipette.active) gsap.set(pipette, { x: e.clientX, y: e.clientY, rotate: 0 })
@@ -125,6 +120,7 @@ addEventListener('click', e => {
                         attr: { y: 113 }, onComplete: () => {
                             pipette.active = false
                             pipette.full = true
+                            pipette.reagent = reagent
                         }
                     })
             }
@@ -136,7 +132,6 @@ addEventListener('click', e => {
             const pipetteLiquid = pipette.contentDocument.querySelector('#liquid');
 
             if (AABB(rect1, rect2)) {
-                console.log(pipetteLiquid.getAttribute('fill'))
                 pipette.active = true
                 gsap.timeline()
                     .to(pipette, 0.2, { x: (rect1.left + rect1.right + rect2.width) / 2, y: (rect1.top + rect1.bottom - rect2.height) / 2 })
@@ -144,10 +139,10 @@ addEventListener('click', e => {
                         attr: { y: 283 }, onComplete: () => {
                             pipette.active = false
                             pipette.full = false
+                            petryDish.addReagent(pipette.reagent)
                         }
                     }, 0.2)
                     .to(petryDish.liquid, { attr: { fill: pipetteLiquid.getAttribute('fill') } }, 0.2)
-                    .to(petryDish.microPlastics, { opacity: 1 })
             }
         }
 })
