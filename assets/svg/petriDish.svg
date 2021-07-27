@@ -1,9 +1,8 @@
 <svg width="237" height="237" viewBox="0 0 237 237" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle id="liquid" cx="118.5" cy="118.5" r="96.5" fill="#21A890"/>
-<g id="micro-plastic" opacity="0">
-    <line id="Line 1" x1="118" y1="114" x2="118" y2="124" stroke="white" stroke-width="4" stroke-linecap="round"/>
-    <line id="Line 2" x1="123" y1="119" x2="113" y2="119" stroke="white" stroke-width="4" stroke-linecap="round"/>
-</g>
+<path class="microplastic" opacity="0" d="M118 114L118 124M123 119H113" stroke="white" stroke-width="4" stroke-linecap="round"/>
+<path class="microplastic" opacity="0" d="M114 115L121.071 122.071M121.071 115L114 122.071" stroke="white" stroke-width="4" stroke-linecap="round"/>
+<path class="microplastic" opacity="0" d="M122.5 119C122.5 121.485 120.485 123.5 118 123.5C115.515 123.5 113.5 121.485 113.5 119C113.5 116.515 115.515 114.5 118 114.5C120.485 114.5 122.5 116.515 122.5 119Z" stroke="white" stroke-width="3"/>
 <circle id="outer" cx="118.5" cy="118.5" r="118.5" fill="#C8D9D3" fill-opacity="0.61"/>
 <circle id="inner" cx="118.5" cy="118.5" r="103" stroke="#FCEFD6" stroke-width="3"/>
 <path id="shine" opacity="0.21" d="M196.5 119C196.5 151.166 176.904 178.754 149 190.48" stroke="white" stroke-width="12" stroke-linecap="round"/>

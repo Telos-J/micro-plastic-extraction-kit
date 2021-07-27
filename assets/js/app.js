@@ -60,8 +60,8 @@ class PetryDish {
     addReagent(reagent) {
         this.visibileMicroPlastic = Math.floor(this.numMicroPlastic * reagent.detection);
         for (const microPlastic of this.microPlastics)
-        if (Math.random() < reagent.detection) gsap.to(microPlastic, { opacity : 1})
-        else gsap.to(microPlastic, { opacity : 0})
+            if (Math.random() < reagent.detection) gsap.to(microPlastic, { opacity: 1 })
+            else gsap.to(microPlastic, { opacity: 0 })
     }
 
     create() {
@@ -74,31 +74,34 @@ class PetryDish {
             this.object = object
             this.svg = object.contentDocument.querySelector('svg');
             this.liquid = this.svg.querySelector('#liquid');
-            
+
             const microPlastic = this.svg.querySelector('#micro-plastic')
-            
+
             for (let i = 0; i < this.numMicroPlastic; i++) {
-                const microPlasticClone = microPlastic.cloneNode(true)
-                this.svg.insertBefore(microPlasticClone, microPlastic)
-                this.setMicroPlastic(microPlasticClone)
+                this.createMicroPlastic()
             }
-            this.setMicroPlastic(microPlastic)
         })
     }
-    setMicroPlastic(microPlastic) {
-        const r = Math.random() * 85 
+
+    createMicroPlastic() {
+        const microPlastics = this.svg.querySelectorAll('.microplastic')
+        const microPlastic = microPlastics[Math.floor(Math.random() * microPlastics.length)]
+        const microPlasticClone = microPlastic.cloneNode(true)
+        const r = Math.random() * 85
         const rotation = Math.random() * Math.PI * 2
-        gsap.set(microPlastic, { x: `+=${r * Math.cos(rotation)} `, y : `+=${r * Math.sin(rotation)}`})
-        this.microPlastics.push(microPlastic)
+        this.svg.insertBefore(microPlasticClone, microPlastic)
+        this.microPlastics.push(microPlasticClone)
+        microPlasticClone.removeAttribute('class')
+        gsap.set(microPlasticClone, { x: `+=${r * Math.cos(rotation)} `, y: `+=${r * Math.sin(rotation)}` })
     }
 }
 
-const tabWater = new PetryDish(40, 50);
-const barleyTea = new PetryDish(15, 25);
-const distilledWater = new PetryDish(5, 8);
+const tabWater = new PetryDish(12, 20);
+const barleyTea = new PetryDish(8, 10);
+const distilledWater = new PetryDish(2, 3);
 
 const reagents = [thymolBlue, methylOrange, wrightStein, btb, ppt, phenolRed]
-const petryDishes = [tabWater, barleyTea, distilledWater] 
+const petryDishes = [tabWater, barleyTea, distilledWater]
 
 addEventListener('mousemove', e => {
     if (!pipette.active) gsap.set(pipette, { x: e.clientX, y: e.clientY, rotate: 0 })
@@ -117,7 +120,8 @@ addEventListener('click', e => {
                     .set(liquid, { attr: { fill: reagent.color } })
                     .to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
                     .to(liquid, {
-                        attr: { y: 113 }, onComplete: () => {
+                        attr: { y: 113 },
+                        onComplete: () => {
                             pipette.active = false
                             pipette.full = true
                             pipette.reagent = reagent
@@ -136,7 +140,8 @@ addEventListener('click', e => {
                 gsap.timeline()
                     .to(pipette, 0.2, { x: (rect1.left + rect1.right + rect2.width) / 2, y: (rect1.top + rect1.bottom - rect2.height) / 2 })
                     .to(pipetteLiquid, {
-                        attr: { y: 283 }, onComplete: () => {
+                        attr: { y: 283 },
+                        onComplete: () => {
                             pipette.active = false
                             pipette.full = false
                             petryDish.addReagent(pipette.reagent)
