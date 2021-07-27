@@ -52,6 +52,7 @@ const phenolRed = new Reagent("Phenol Red", "red", 0.3);
 class PetryDish {
     constructor(min, max) {
         this.numMicroPlastic = Math.floor((max - min) * Math.random() + min);
+        this.microPlastics = []
         this.visibileMicroPlastic = 0;
         this.create()
     }
@@ -70,8 +71,22 @@ class PetryDish {
             this.object = object
             this.svg = object.contentDocument.querySelector('svg');
             this.liquid = this.svg.querySelector('#liquid');
-            gsap.set(this.svg.querySelector('#micro-plastic'), { x: '-=50' })
+            
+            const microPlastic = this.svg.querySelector('#micro-plastic')
+            
+            for (let i = 0; i < this.numMicroPlastic; i++) {
+                const microPlasticClone = microPlastic.cloneNode(true)
+                this.svg.insertBefore(microPlasticClone, microPlastic)
+                this.setMicroPlastic(microPlasticClone)
+            }
+            this.setMicroPlastic(microPlastic)
         })
+    }
+    setMicroPlastic(microPlastic) {
+        const r = Math.random() * 85 
+        const rotation = Math.random() * Math.PI * 2
+        gsap.set(microPlastic, { x: `+=${r * Math.cos(rotation)} `, y : `+=${r * Math.sin(rotation)}`})
+        this.microPlastics.push(microPlastic)
     }
 }
 
@@ -132,7 +147,7 @@ addEventListener('click', e => {
                         }
                     }, 0.2)
                     .to(petryDish.liquid, { attr: { fill: pipetteLiquid.getAttribute('fill') } }, 0.2)
-                    .to(petryDish.svg.querySelector('#micro-plastic'), { opacity: 1 })
+                    .to(petryDish.microPlastics, { opacity: 1 })
             }
         }
 })
