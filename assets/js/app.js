@@ -70,6 +70,7 @@ class PetryDish {
             this.object = object
             this.svg = object.contentDocument.querySelector('svg');
             this.liquid = this.svg.querySelector('#liquid');
+            gsap.set(this.svg.querySelector('#micro-plastic'), { x: '-=50' })
         })
     }
 }
@@ -103,7 +104,7 @@ addEventListener('click', e => {
             if (AABB(rect1, rect2)) {
                 pipette.active = true
                 gsap.timeline()
-                    .set(liquid, { fill: reagent.color })
+                    .set(liquid, { attr: { fill: reagent.color } })
                     .to(pipette, 0.2, { x: (rect1.left + rect1.right) / 2, y: rect1.top, rotate: -45 })
                     .to(liquid, {
                         attr: { y: 113 }, onComplete: () => {
@@ -120,6 +121,7 @@ addEventListener('click', e => {
             const pipetteLiquid = pipette.contentDocument.querySelector('#liquid');
 
             if (AABB(rect1, rect2)) {
+                console.log(pipetteLiquid.getAttribute('fill'))
                 pipette.active = true
                 gsap.timeline()
                     .to(pipette, 0.2, { x: (rect1.left + rect1.right + rect2.width) / 2, y: (rect1.top + rect1.bottom - rect2.height) / 2 })
@@ -128,8 +130,9 @@ addEventListener('click', e => {
                             pipette.active = false
                             pipette.full = false
                         }
-                    })
-                    .to(petryDishliquid, {atter : fill })
+                    }, 0.2)
+                    .to(petryDish.liquid, { attr: { fill: pipetteLiquid.getAttribute('fill') } }, 0.2)
+                    .to(petryDish.svg.querySelector('#micro-plastic'), { opacity: 1 })
             }
         }
 })
